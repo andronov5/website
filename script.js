@@ -1,23 +1,34 @@
+/* ===== POP‑UP ===== */
+const demoBtn  = document.getElementById('demoBtn');
+const popup    = document.getElementById('demoPopup');
+const closeBtn = document.getElementById('closePopup');
 
-/* ----------  NAVBAR behaviour  ---------- */
-const navbar     = document.querySelector('.navbar');
-let lastScroll   = window.scrollY;
+demoBtn.addEventListener('click', () => popup.style.display = 'flex');
+closeBtn.addEventListener('click', () => popup.style.display = 'none');
+window.addEventListener('click', e => { if (e.target === popup) popup.style.display = 'none'; });
+
+/* ===== NAVBAR ===== */
+const navbar   = document.querySelector('.navbar');
+let lastScroll = window.scrollY;
+let hideTimer  = null;
 
 window.addEventListener('scroll', () => {
   // Solid background after 80 px
-  if (window.scrollY > 80) navbar.classList.add('navbar--solid');
-  else                     navbar.classList.remove('navbar--solid');
+  navbar.classList.toggle('navbar--solid', window.scrollY > 80);
 
-  // Hide on scroll‑down, show on scroll‑up
-  if (window.scrollY > lastScroll && window.scrollY > 200)
-       navbar.classList.add('navbar--hidden');
-  else navbar.classList.remove('navbar--hidden');
-
+  // Debounced hide: wait 350 ms of downward scroll before hiding
+  if (window.scrollY > lastScroll && window.scrollY > 200){
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(()=>navbar.classList.add('navbar--hidden'), 350);
+  } else {
+    clearTimeout(hideTimer);
+    navbar.classList.remove('navbar--hidden');
+  }
   lastScroll = window.scrollY;
 });
 
-/* ----------  Fade‑in observer  ---------- */
-const faders   = document.querySelectorAll('.fade');
+/* ===== SECTION FADE‑IN ===== */
+const faders = document.querySelectorAll('.fade');
 const revealIO = new IntersectionObserver((entries,obs)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
@@ -28,7 +39,7 @@ const revealIO = new IntersectionObserver((entries,obs)=>{
 },{threshold:.15});
 faders.forEach(el=>revealIO.observe(el));
 
-/* ----------  Stat counter animation  ---------- */
+/* ===== STAT COUNTERS ===== */
 const counters = document.querySelectorAll('.stat__num');
 const counterIO = new IntersectionObserver((entries,obs)=>{
   entries.forEach(entry=>{
@@ -43,7 +54,8 @@ counters.forEach(c=>counterIO.observe(c));
 function animateCount(el){
   const target = +el.dataset.count;
   let current = 0;
-  const step = target / 60; // 60 frames
+  const frames = 60;
+  const step   = target / frames;
   const tick = () => {
     current += step;
     if(current < target){
@@ -53,21 +65,3 @@ function animateCount(el){
   };
   requestAnimationFrame(tick);
 }
-
-/* ----------  Testimonial slider  ---------- */
-const slides = document.querySelectorAll('.slide');
-const prev   = document.querySelector('.prev');
-const next   = document.querySelector('.next');
-let idx = 0;
-
-function update(dir=1){
-  slides[idx].classList.remove('active');
-  idx = (idx + dir + slides.length) % slides.length;
-  slides[idx].classList.add('active');
-}
-prev.addEventListener('click',()=>update(-1));
-next.addEventListener('click',()=>update(1));
-
-let auto = setInterval(update, 8000);
-document.querySelector('.testimonials').addEventListener('mouseenter',()=>clearInterval(auto));
-document.querySelector('.testimonials').addEventListener('mouseleave',()=>auto=setInterval(update,8000));

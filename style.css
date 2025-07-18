@@ -1,101 +1,219 @@
-/* ===== Reset ===== */
+/* ===== Reset & Base ===== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',sans-serif;color:#1a202c;background:#fdfdfd;line-height:1.7;scroll-behavior:smooth}
-img,video{max-width:100%;display:block}
+body{font-family:'DM Sans',sans-serif;background:#fdfdfd;color:#111;font-size:23px;line-height:1.7;scroll-behavior:smooth}
+img{max-width:100%;display:block}
 
 /* ===== Variables ===== */
 :root{
-  --ink:#062a40;
-  --accent:#00aaff;
-  --accent-soft:#e8f8ff;
-  --radius:0.65rem;
-  --shadow:0 4px 14px rgba(0,0,0,.09);
+  --ink:#0c1e2b;
+  --accent:#0098ff;
+  --accent-soft:#e7f5ff;
+  --radius:.65rem;
+  --shadow:0 4px 14px rgba(0,0,0,.08);
 }
 
 /* ===== Typography ===== */
-h1,h2,h3{font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--ink);text-transform:uppercase;line-height:1.15}
-h1{font-size:clamp(2.4rem,5vw+1rem,4rem)}
-h2{font-size:clamp(1.6rem,1.5vw+1rem,2.25rem);margin-bottom:.8rem;position:relative}
-h3{font-size:1.25rem;margin-bottom:.4rem}
-.section‑title::after{
-  content:'';position:absolute;left:0;bottom:-6px;width:56px;height:3px;
-  background:var(--accent);transition:width .35s ease;
-}
-.section‑title:hover::after{width:90px}
+h1,h2,h3{font-family:'Bebas Neue',sans-serif;font-weight:400;color:var(--ink);text-transform:uppercase;line-height:1.15}
+h1{font-size:calc(5.5rem + 30px);letter-spacing:.5px}      /* +30 pt */
+.subtitle{font-family:'Bebas Neue',sans-serif;font-size:calc(2.2rem + 45px);margin:1.2rem 0 2.5rem;color:#1c2937} /* +45 pt */
+h2{font-size:53px;margin-bottom:1.1rem;position:relative}  /* ~40 pt */
+h2::after{content:'';position:absolute;left:0;bottom:-6px;width:60px;height:3px;background:var(--accent);transition:width .35s}
+h2:hover::after{width:90px}
+h3{font-size:1.6rem;margin-bottom:.4rem}
 p{margin-bottom:1rem}
 
-/* ===== Layout Helpers ===== */
-.section{padding:min(12vw,7rem) 1rem}
-.shell{max-width:68rem;margin:0 auto}
-.grid‑3{display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-.fade{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
-
 /* ===== Navbar ===== */
-.navbar{position:fixed;top:0;left:0;width:100%;height:64px;z-index:1000;
-  display:flex;align-items:center;transition:background .25s,box-shadow .25s,transform .25s}
-.brand{margin-left:.8rem;font-family:'Rajdhani',sans-serif;font-size:1.5rem;color:#fff;text-decoration:none;letter-spacing:.5px}
-.menu{display:flex;gap:2rem;margin-left:auto;margin-right:.8rem;list-style:none}
-.menu a{font-family:'Rajdhani',sans-serif;color:#fff;font-size:1.05rem;text-decoration:none;position:relative}
+.navbar{position:fixed;top:0;left:0;width:100%;height:64px;z-index:1000;display:flex;align-items:center;transition:background .25s,box-shadow .25s,transform .25s}
+.navbar{background:transparent}
+.navbar--solid{background:rgba(12,30,43,.92);backdrop-filter:blur(8px);box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.navbar--hidden{transform:translateY(-100%)}
+
+.nav__wrap{max-width:72rem;margin:0 auto;width:100%;padding:0 1rem;display:flex;align-items:center}
+.brand{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;color:#fff;text-decoration:none;letter-spacing:.8px}
+.menu{margin-left:auto;display:flex;gap:2rem;list-style:none}
+.menu a{font-family:'DM Sans',sans-serif;font-size:28px;color:#fff;text-decoration:none;position:relative} /* +7 pt */
 .menu a::after{content:'';position:absolute;left:0;bottom:-4px;height:2px;width:0;background:#fff;transition:width .3s}
 .menu a:hover::after{width:100%}
 
-/* Transparent → solid on scroll */
-.navbar{background:transparent}
-.navbar--solid{background:rgba(6,42,64,.92);backdrop-filter:blur(8px);box-shadow:0 2px 8px rgba(0,0,0,.15)}
-.navbar--hidden{transform:translateY(-100%)}
-
 /* Hamburger (≤768 px) */
 .nav‑toggle{display:none}
-.hamburger{display:none;flex-direction:column;justify-content:space-between;width:28px;height:20px;margin-left:auto;margin-right:1rem;cursor:pointer}
-.hamburger span{display:block;height:3px;background:#fff;border-radius:2px}
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:30px;height:22px;margin-left:auto;cursor:pointer}
+.hamburger span{height:3px;width:100%;background:#fff;border-radius:2px}
 @media(max-width:768px){
   .hamburger{display:flex}
-  .menu{position:fixed;right:-100%;top:64px;width:220px;height:calc(100vh - 64px);
-    flex-direction:column;gap:1.5rem;padding-top:2rem;background:rgba(6,42,64,.97);backdrop-filter:blur(6px);transition:right .3s}
+  .menu{position:fixed;right:-100%;top:64px;width:240px;height:calc(100vh - 64px);flex-direction:column;gap:2rem;padding-top:2.5rem;background:rgba(12,30,43,.97);backdrop-filter:blur(6px);transition:right .3s}
   .nav‑toggle:checked + .hamburger + .menu{right:0}
 }
 
 /* ===== Hero ===== */
-.hero{position:relative;height:92vh;color:#fff;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
-.hero__bg{position:absolute;inset:0;object-fit:cover;filter:brightness(.48) blur(1px)}
-.hero__inner{position:relative;z-index:2;max-width:46rem;padding:0 1rem}
-.highlight{color:var(--accent)}
-.tagline{font-size:1.25rem;margin-bottom:2rem}
-.btn{display:inline-block;padding:.95rem 2.6rem;border-radius:var(--radius);background:var(--accent);color:#fff;font-weight:600;letter-spacing:.4px;text-decoration:none;transition:transform .25s,box-shadow .25s}
+.hero{position:relative;min-height:92vh;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:0 1rem}
+.hero__bg{position:absolute;inset:0;object-fit:cover;filter:brightness(.55) blur(1px);animation:zoom 40s ease-in-out infinite alternate; pointer-events:none;}
+@keyframes zoom{from{transform:scale(1)}to{transform:scale(1.15)}}
+.hero__inner{position:relative;z-index:2;max-width:60rem}
+
+/* ===== Button ===== */
+.btn{display:inline-block;background:var(--accent);color:#fff;padding:1rem 2.8rem;font-size:1.15rem;font-weight:700;border:none;border-radius:var(--radius);cursor:pointer;letter-spacing:.4px;transition:transform .25s,box-shadow .25s}
 .btn:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
 
-/* ===== Feature Cards ===== */
+/* ===== Sections ===== */
+.section{padding:min(12vw,7rem) 1rem}
+.shell{max-width:64rem;margin:0 auto}
+
+/* Features */
+.features .grid‑3{display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
 .card{background:#fff;border-radius:var(--radius);padding:2rem;box-shadow:var(--shadow);transition:transform .25s}
 .card:hover{transform:translateY(-6px)}
-.card p{margin-bottom:0;color:#3d4852}
+.card p{margin-bottom:0;color:#303841}
 
-/* ===== Stats ===== */
+/* Stats */
 .stats{background:var(--ink);color:#fff;text-align:center}
 .stats__wrap{display:flex;flex-wrap:wrap;justify-content:center;gap:3rem}
-.stat{font-family:'Rajdhani',sans-serif}
-.stat__num{font-size:3rem;font-weight:700;display:block}
-.stat p{margin:0;margin-top:.4rem;font-size:1.1rem;color:#cde9ff}
+.stat{font-family:'Bebas Neue';}
+.stat__num{font-size:4rem;font-weight:400;display:block}
+.stat p{margin:0;margin-top:.4rem;font-size:1rem;color:#cde9ff}
 
-/* ===== Testimonials Slider ===== */
-.testimonials{position:relative;text-align:center}
-.slides{overflow:hidden;max-width:48rem;margin:2.5rem auto 0}
-.slide{opacity:0;transform:translateX(100%);transition:opacity .6s,transform .6s}
-.slide.active{opacity:1;transform:none}
-.slide blockquote{font-size:1.25rem;font-style:italic;margin-bottom:.6rem;color:#1a202c}
-.slide‑btn{position:absolute;top:55%;transform:translateY(-50%);background:var(--accent);color:#fff;border:0;width:42px;height:42px;font-size:1.8rem;border-radius:50%;cursor:pointer;transition:background .25s}
-.slide‑btn:hover{background:#0084cc}
-.prev{left:-20px}.next{right:-20px}
+/* Science */
+.science{background:var(--accent-soft)}
 
-/* ===== CTA ===== */
-.cta{text-align:center;background:var(--accent-soft)}
-.cta__text{max-width:40rem;margin:0 auto 2rem;font-size:1.1rem;color:#2f4858}
-.cta__form{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
-.cta input{padding:.9rem 1rem;border:2px solid var(--ink);border-radius:var(--radius);font-size:1rem;min-width:240px}
-.cta input:focus{outline:none;border-color:var(--accent)}
-.cta .btn{padding:.9rem 2.2rem}
+/* Creator */
+.creator{display:flex;flex-wrap:wrap;gap:3rem;align-items:center}
+.creator__img{flex:0 0 300px}
+.creator__img img{width:100%;border-radius:var(--radius);box-shadow:var(--shadow)}
+.creator__text{flex:1 1 320px}
+@media(max-width:768px){
+  .creator{flex-direction:column;text-align:center}
+  .creator__img{margin:0 auto}
+}
 
 /* ===== Footer ===== */
-.footer{background:var(--ink);color:#a0aec0;text-align:center;padding:1.8rem 1rem;font-size:.9rem}
+.footer{background:var(--ink);color:#aab8c8;text-align:center;padding:1.8rem 1rem;font-size:.9rem}
 
-/* ===== Fade‑in on scroll ===== */
+/* ===== Pop‑up ===== */
+.popup{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);justify-content:center;align-items:center;z-index:1050}
+.popup__box{position:relative;background:#fff;padding:40px 60px;border-radius:var(--radius);text-align:center;max-width:420px}
+.popup__close{position:absolute;top:12px;right:16px;font-family:'Bebas Neue';font-size:34px;color:var(--ink);cursor:pointer}
+
+/* ===== Scroll Animations ===== */
+.fade{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}
 .show{opacity:1 !important;transform:none !important}
+
+/* ───‑‑  SIZE ADJUSTMENTS  ‑‑──────────────────────────────────────── */
+
+/* 1) Hero headline & subtitle  (‑7 pt  /  ‑12 pt) */
+h1{
+  /* original: calc(5.5rem + 30px);  30 px ≈ 22.5 pt */
+  font-size:calc(5.5rem + 20px);   /* 20 px ≈ 15 pt  → 7 pt smaller */
+}
+.subtitle{
+  /* original: calc(2.2rem + 45px); 45 px ≈ 33.8 pt */
+  font-size:calc(2.2rem + 29px);   /* 29 px ≈ 21.8 pt  → 12 pt smaller */
+}
+
+/* 2) Navbar items  (‑5 pt) */
+.menu a{
+  /* original: 28px ≈ 21 pt */
+  font-size:21px;                  /* ≈ 16 pt (21−5) */
+}
+
+/* 3) “Why Customers Choose Us” cards  (+5 pt title, ‑5 pt body) */
+.features .card h3{
+  /* original: 1.6rem  → 1.6×23px = 36.8px ≈ 27.6 pt */
+  font-size:1.9rem;                /* 1.9×23 = 43.7px ≈ 32.8 pt  (+5 pt) */
+}
+.features .card p{
+  /* original inherited 23 px (≈ 17 pt) */
+  font-size:0.7rem;                /* 0.7×23 = 16.1px ≈ 12 pt  (‑5 pt) */
+}
+
+/* 4) Stat captions under the counters  (+4 pt) */
+.stats .stat p{
+  /* original: 1rem → 23px ≈ 17 pt */
+  font-size:1.25rem;               /* 1.25×23 = 28.8px ≈ 21 pt (+4 pt) */
+}
+
+/* ── SIZE TUNING ─────────────────────────────────────────── */
+
+/* 1) HERO  ──────────────────── */
+/* Title  ↓ 3 pt  (≈ –4 px) */
+h1{
+  /* was: calc(5.5rem + 20px) */
+  font-size:calc(5.5rem + 16px);
+}
+/* Subtitle  ↓ 7 pt  (≈ –9 px) */
+.subtitle{
+  /* was: calc(2.2rem + 29px) */
+  font-size:calc(2.2rem + 20px);
+}
+
+/* 2) NAVBAR  ─────────────────── */
+/* Items  ↓ 2 pt  (≈ –3 px)  | still DM Sans */
+.menu a{
+  /* was: 21px */
+  font-size:18px;
+}
+
+/* 3) “WHY CUSTOMERS CHOOSE US”  ───────── */
+/* Card body copy  ↑ 7 pt  (≈ +9 px) */
+.features .card p{
+  /* was: 0.7rem ≈ 16 px */
+  font-size:1.1rem;   /* ≈ 25 px */
+}
+
+/* 4) LAUNCH BUTTON  ─────────── */
+/* “Launch the Live Demo”  ↑ 2 pt  (≈ +3 px) */
+.btn{
+  /* was: 1.15rem */
+  font-size:1.27rem;
+}
+
+/* ──  A)  WHY CUSTOMERS CHOOSE US  (all fonts +2 pt)  ───────────── */
+.features .card h3{
+  /* previously 1.9rem ≈ 44 px */
+  font-size:2.05rem;                 /* ≈ 48 px  (+2 pt) */
+}
+.features .card p{
+  /* previously 1.1rem ≈ 25 px */
+  font-size:1.2rem;                  /* ≈ 28 px  (+2 pt) */
+}
+
+/* ──  B)  STATS BAR  ───────────────────────────────────────────── */
+.stats{
+  padding:4rem 1rem;                 /* was min(12vw,7rem)=~7rem → slimmer */
+}
+/* unit mark sits in the same line as the number;
+   wrap it in a span for independent sizing */
+.stat__num + .unit{
+  font-size:1.5rem;                  /* +3 pt over default body size */
+  vertical-align:20%;                /* slight raise to align visually */
+}
+.stats .stat p{
+  font-size:1.4rem;                  /* +3 pt over earlier 1.25rem */
+}
+
+/* example HTML change for the unit mark
+   <span class="stat__num" data-count="7.8">0</span><span class="unit"> %</span>
+*/
+
+/* =========================================================================
+   HERO BACKGROUND  (works for <img> *and* <video>)
+   ======================================================================= */
+.hero__bg{
+  position:absolute;
+  inset:0;                 /* anchors all four sides → full overlay   */
+  width:100%;              /* ← add */
+  height:100%;             /* ← add */
+  object-fit:cover;        /* scales to cover both axes, cropping excess */
+  object-position:center;  /* keeps the focus centred                  */
+  filter:brightness(.55) blur(1px);
+  animation:zoom 40s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+
+/* Add at the end of style.css */
+h1, .subtitle{
+  color:#fff;                                  /* pure white     */
+  text-shadow:0 2px 4px rgba(0,0,0,.4);        /* soft outline   */
+}
+.subtitle{ color:rgba(255,255,255,.8); }       /* 80 % white     */
+
+.highlight{ color:#0098ff; }                   /* optional span  */
